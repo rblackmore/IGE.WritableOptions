@@ -3,7 +3,7 @@ using Microsoft.Extensions.Hosting;
 
 using System.Text.Json;
 
-namespace IGE.ApplicationPreferences.ConsoleTest
+namespace IGE.WritableOptions.ConsoleTest
 {
     public static class Program
     {

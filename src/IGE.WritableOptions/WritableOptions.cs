@@ -1,4 +1,4 @@
-﻿namespace IGE.ApplicationPreferences
+﻿namespace IGE.WritableOptions
 {
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Options;

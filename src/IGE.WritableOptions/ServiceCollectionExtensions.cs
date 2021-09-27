@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 
 using System.Text.Json;
 
-namespace IGE.ApplicationPreferences
+namespace IGE.WritableOptions
 {
     public static class ServiceCollectionExtensions
     {

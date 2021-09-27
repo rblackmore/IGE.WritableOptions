@@ -3,7 +3,7 @@ using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace IGE.ApplicationPreferences
+namespace IGE.WritableOptions
 {
     [Obsolete("Class is Deprecated, Register an IWritableOptions<T> instead")]
     public class Preferences<T> where T : class

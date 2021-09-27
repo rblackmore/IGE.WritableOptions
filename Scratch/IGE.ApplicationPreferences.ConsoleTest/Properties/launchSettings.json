@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "IGE.ApplicationPreferences.ConsoleTest": {
+    "IGE.WritableOptions.ConsoleTest": {
       "commandName": "Project"
     }
   }

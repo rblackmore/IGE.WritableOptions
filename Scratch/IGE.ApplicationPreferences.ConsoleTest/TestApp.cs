@@ -12,7 +12,7 @@ using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace IGE.ApplicationPreferences.ConsoleTest
+namespace IGE.WritableOptions.ConsoleTest
 {
     public class TestApp : IHostedService
     {
