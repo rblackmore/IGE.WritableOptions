@@ -1,20 +1,26 @@
-﻿namespace IGE.WritableOptions
-{
-    using Microsoft.Extensions.Hosting;
-    using Microsoft.Extensions.Options;
+﻿// <copyright file="WritableOptions.cs" company="Ryan Blackmore">.
+// Copyright © 2021 Ryan Blackmore. All rights Reserved.
+// </copyright>
 
+namespace IGE.WritableOptions
+{
     using System;
     using System.IO;
     using System.Text.Json;
     using System.Text.Json.Nodes;
 
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Options;
+
     /// <summary>
     /// Writable Options, which can be injected into application components.
-    /// Can make changes to an options POCO class, and write them back to JSON file (default appsettings.json).
+    /// Can make changes to an options POCO class,
+    /// and write them back to JSON file (default appsettings.json).
     /// Should be registered as Transient.
     /// </summary>
     /// <typeparam name="T">The POCO Class to hold options, and to serialize.</typeparam>
-    public class WritableOptions<T> : IWritableOptions<T> where T : class, new()
+    public class WritableOptions<T> : IWritableOptions<T>
+        where T : class, new()
     {
         private readonly IHostEnvironment hostEnvironment;
         private readonly IOptionsMonitor<T> options;
@@ -33,14 +39,30 @@
             this.options = options;
             this.section = section;
             this.filePath = filePath;
-            this.jsonSerializerOptions = jsonSerializerOptions ?? DefaultSerializerOptions;
+            this.jsonSerializerOptions =
+                jsonSerializerOptions ?? DefaultSerializerOptions;
 
             this.Initialize();
         }
 
-
         /// <inheritdoc/>
         public T Value => this.options.CurrentValue;
+
+        private static JsonSerializerOptions DefaultSerializerOptions => new()
+        {
+            WriteIndented = true,
+        };
+
+        private string PhysicalFilePath
+        {
+            get
+            {
+                var fileProvider = this.hostEnvironment.ContentRootFileProvider;
+                var fileInfo = fileProvider.GetFileInfo(this.filePath);
+                var physicalPath = fileInfo.PhysicalPath;
+                return physicalPath;
+            }
+        }
 
         /// <inheritdoc/>
         public T Get(string name) => this.options.Get(name);
@@ -51,7 +73,7 @@
         /// <param name="applyChanges">Action which applies changes to the configuration object.</param>
         public void Update(Action<T> applyChanges)
         {
-            var physicalPath = GetPhysicalFilePath();
+            var physicalPath = this.PhysicalFilePath;
 
             var rootNode = JsonNode.Parse(File.ReadAllText(physicalPath));
 
@@ -62,27 +84,22 @@
             var sectionJson = JsonSerializer.Serialize(sectionObject);
 
             rootNode[this.section] = JsonNode.Parse(sectionJson);
-            
+
             var fileStream = File.OpenWrite(physicalPath);
 
-            var writer = new Utf8JsonWriter(fileStream, new() 
-            { 
+            var writer = new Utf8JsonWriter(fileStream, new()
+            {
                 Indented = true,
             });
 
-            rootNode.WriteTo(writer, jsonSerializerOptions);
+            rootNode.WriteTo(writer, this.jsonSerializerOptions);
 
             writer.Flush();
         }
 
-        private JsonSerializerOptions DefaultSerializerOptions => new()
-            {
-                WriteIndented = true,
-            };
-
         private void Initialize()
         {
-            var physicalPath = GetPhysicalFilePath();
+            var physicalPath = this.PhysicalFilePath;
 
             // Create new file, and initilize with empty root object.
             if (!File.Exists(physicalPath))
@@ -100,14 +117,6 @@
 
                 writer.Flush();
             }
-        }
-
-        private string GetPhysicalFilePath()
-        {
-            var fileProvider = this.hostEnvironment.ContentRootFileProvider;
-            var fileInfo = fileProvider.GetFileInfo(this.filePath);
-            var physicalPath = fileInfo.PhysicalPath;
-            return physicalPath;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace IGE.WritableOptions.ConsoleTest
             var config = this.options.Value;
 
             AnsiConsole.WriteLine($"Name: {options.Value.Name}");
-            AnsiConsole.WriteLine($"Score: {options.Value.Score}");
+            AnsiConsole.WriteLine($"Score: {this.options.Value.Score}");
 
             options.Update(config =>
             {
