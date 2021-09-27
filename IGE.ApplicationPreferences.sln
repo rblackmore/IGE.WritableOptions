@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31321.278
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31612.314
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IGE.ApplicationPreferences", "IGE.ApplicationPreferences\IGE.ApplicationPreferences.csproj", "{ED0473D1-0547-4182-9CF9-BD357D59EF89}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Consoles and Scratch", "Consoles and Scratch", "{18176244-DE3C-45BB-AED7-BED67187C53F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IGE.ApplicationPreferences.ConsoleTest", "Scratch\IGE.ApplicationPreferences.ConsoleTest\IGE.ApplicationPreferences.ConsoleTest.csproj", "{0C967789-91E5-4079-819E-088D2EAEDF5B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +19,16 @@ Global
 		{ED0473D1-0547-4182-9CF9-BD357D59EF89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED0473D1-0547-4182-9CF9-BD357D59EF89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED0473D1-0547-4182-9CF9-BD357D59EF89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C967789-91E5-4079-819E-088D2EAEDF5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C967789-91E5-4079-819E-088D2EAEDF5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C967789-91E5-4079-819E-088D2EAEDF5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C967789-91E5-4079-819E-088D2EAEDF5B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0C967789-91E5-4079-819E-088D2EAEDF5B} = {18176244-DE3C-45BB-AED7-BED67187C53F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1F92C21A-0658-48C5-8A86-116C3036A356}

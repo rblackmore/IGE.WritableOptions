@@ -1,0 +1,10 @@
+{
+  "SomeKey": {
+    "Option 1": true,
+    "Option 2": "Don't Do it!!!"
+  },
+  "AnotherObject": {
+    "Some Option": 9001,
+    "Greeting": "Hello, Grugg"
+  }
+}

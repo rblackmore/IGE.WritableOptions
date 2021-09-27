@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace IGE.ApplicationPreferences
 {
+    [Obsolete("Class is Deprecated, Register an IWritableOptions<T> instead")]
     public class Preferences<T> where T : class
     {
         private readonly string filepath;
