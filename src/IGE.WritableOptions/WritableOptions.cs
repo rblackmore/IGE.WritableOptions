@@ -12,25 +12,19 @@ namespace IGE.WritableOptions
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Options;
 
-    /// <summary>
-    /// Writable Options, which can be injected into application components.
-    /// Can make changes to an options POCO class,
-    /// and write them back to JSON file (default appsettings.json).
-    /// Should be registered as Transient.
-    /// </summary>
-    /// <typeparam name="T">The POCO Class to hold options, and to serialize.</typeparam>
-    public class WritableOptions<T> : IWritableOptions<T>
-        where T : class, new()
+    /// <inheritdoc/>
+    public class WritableOptions<TOptions> : IWritableOptions<TOptions>
+        where TOptions : class, new()
     {
         private readonly IHostEnvironment hostEnvironment;
-        private readonly IOptionsMonitor<T> options;
+        private readonly IOptionsMonitor<TOptions> options;
         private readonly string section;
         private readonly string filePath;
         private readonly JsonSerializerOptions jsonSerializerOptions;
 
         public WritableOptions(
             IHostEnvironment hostEnvironment,
-            IOptionsMonitor<T> options,
+            IOptionsMonitor<TOptions> options,
             string section,
             string filePath,
             JsonSerializerOptions jsonSerializerOptions = null)
@@ -46,7 +40,7 @@ namespace IGE.WritableOptions
         }
 
         /// <inheritdoc/>
-        public T Value => this.options.CurrentValue;
+        public TOptions Value => this.options.CurrentValue;
 
         private static JsonSerializerOptions DefaultSerializerOptions => new()
         {
@@ -65,19 +59,16 @@ namespace IGE.WritableOptions
         }
 
         /// <inheritdoc/>
-        public T Get(string name) => this.options.Get(name);
+        public TOptions Get(string name) => this.options.Get(name);
 
-        /// <summary>
-        /// Applies changes to configuration setting and saves to file.
-        /// </summary>
-        /// <param name="applyChanges">Action which applies changes to the configuration object.</param>
-        public void Update(Action<T> applyChanges)
+        /// <inheritdoc/>
+        public void Update(Action<TOptions> applyChanges)
         {
             var physicalPath = this.PhysicalFilePath;
 
             var rootNode = JsonNode.Parse(File.ReadAllText(physicalPath));
 
-            var sectionObject = rootNode[this.section]?.Deserialize<T>() ?? new T();
+            var sectionObject = rootNode[this.section]?.Deserialize<TOptions>() ?? new TOptions();
 
             applyChanges(sectionObject);
 

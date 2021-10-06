@@ -2,11 +2,9 @@
 // Copyright © 2021 Ryan Blackmore. All rights Reserved.
 // </copyright>
 
-#pragma warning disable HAA0302 // Display class allocation to capture closure
-#pragma warning disable HAA0301 // Closure Allocation Source
-#pragma warning disable HAA0303 // Lambda or anonymous method in a generic method allocates a delegate instance
 namespace IGE.WritableOptions
 {
+    using System;
     using System.Text.Json;
 
     using Ardalis.GuardClauses;
@@ -18,6 +16,12 @@ namespace IGE.WritableOptions
 
     public static class ServiceCollectionExtensions
     {
+        private static string FileName { get; set; }
+
+        private static IConfigurationSection Section { get; set; }
+
+        private static JsonSerializerOptions JsonSerializerOptions { get; set; }
+
         public static IServiceCollection ConfigureWritableOptions<T>(
             this IServiceCollection services,
             IConfigurationSection section,
@@ -25,20 +29,22 @@ namespace IGE.WritableOptions
             JsonSerializerOptions jsonSerializerOptions = null)
             where T : class, new()
         {
-            Guard.Against.NullOrWhiteSpace(file, nameof(file));
+            Guard.Against.Null(services, nameof(services));
+            FileName = Guard.Against.NullOrWhiteSpace(file, nameof(file));
+            Section = Guard.Against.Null(section, nameof(section));
+            JsonSerializerOptions = jsonSerializerOptions;
 
-            services.Configure<T>(section);
-            services.AddTransient<IWritableOptions<T>>(provider =>
-            {
-                var environment = provider.GetService<IHostEnvironment>();
-                var options = provider.GetService<IOptionsMonitor<T>>();
-                return new WritableOptions<T>(environment, options, section.Key, file, jsonSerializerOptions);
-            });
+            services.AddTransient<IWritableOptions<T>>(WritableOptionsFactory<T>);
 
             return services;
         }
+
+        private static WritableOptions<T> WritableOptionsFactory<T>(IServiceProvider provider)
+            where T : class, new()
+        {
+            var environment = provider.GetService<IHostEnvironment>();
+            var options = provider.GetService<IOptionsMonitor<T>>();
+            return new WritableOptions<T>(environment, options, Section.Key, FileName, JsonSerializerOptions);
+        }
     }
 }
-#pragma warning restore HAA0303 // Lambda or anonymous method in a generic method allocates a delegate instance
-#pragma warning restore HAA0301 // Closure Allocation Source
-#pragma warning restore HAA0302 // Display class allocation to capture closure
