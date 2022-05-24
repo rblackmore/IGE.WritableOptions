@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31612.314
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Consoles and Scratch", "Consoles and Scratch", "{18176244-DE3C-45BB-AED7-BED67187C53F}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IGE.ApplicationPreferences.ConsoleTest", "Scratch\IGE.ApplicationPreferences.ConsoleTest\IGE.ApplicationPreferences.ConsoleTest.csproj", "{0C967789-91E5-4079-819E-088D2EAEDF5B}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{AC974B0C-9554-4696-898B-E20B4CA28E12}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IGE.WritableOptions", "src\IGE.WritableOptions\IGE.WritableOptions.csproj", "{88455B85-4CA4-44BD-8398-C80FC5A9BCCD}"
@@ -17,27 +13,38 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		stylecop.json = stylecop.json
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".scratch", ".scratch", "{1D9EBFC2-487F-43E3-B5C2-870F5AA7AE78}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IGE.WritableOptions.ConsoleTest", ".scratch\IGE.ApplicationPreferences.ConsoleTest\IGE.WritableOptions.ConsoleTest.csproj", "{90E543F5-477B-49E6-A35E-0B0B145DC146}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleScratch", ".scratch\ConsoleScratch\ConsoleScratch.csproj", "{EA5A0022-5BC2-40A9-AD02-4BA80FE71795}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0C967789-91E5-4079-819E-088D2EAEDF5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0C967789-91E5-4079-819E-088D2EAEDF5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0C967789-91E5-4079-819E-088D2EAEDF5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0C967789-91E5-4079-819E-088D2EAEDF5B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{88455B85-4CA4-44BD-8398-C80FC5A9BCCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{88455B85-4CA4-44BD-8398-C80FC5A9BCCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88455B85-4CA4-44BD-8398-C80FC5A9BCCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88455B85-4CA4-44BD-8398-C80FC5A9BCCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90E543F5-477B-49E6-A35E-0B0B145DC146}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90E543F5-477B-49E6-A35E-0B0B145DC146}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90E543F5-477B-49E6-A35E-0B0B145DC146}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90E543F5-477B-49E6-A35E-0B0B145DC146}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA5A0022-5BC2-40A9-AD02-4BA80FE71795}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA5A0022-5BC2-40A9-AD02-4BA80FE71795}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA5A0022-5BC2-40A9-AD02-4BA80FE71795}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA5A0022-5BC2-40A9-AD02-4BA80FE71795}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{0C967789-91E5-4079-819E-088D2EAEDF5B} = {18176244-DE3C-45BB-AED7-BED67187C53F}
 		{88455B85-4CA4-44BD-8398-C80FC5A9BCCD} = {AC974B0C-9554-4696-898B-E20B4CA28E12}
+		{90E543F5-477B-49E6-A35E-0B0B145DC146} = {1D9EBFC2-487F-43E3-B5C2-870F5AA7AE78}
+		{EA5A0022-5BC2-40A9-AD02-4BA80FE71795} = {1D9EBFC2-487F-43E3-B5C2-870F5AA7AE78}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1F92C21A-0658-48C5-8A86-116C3036A356}

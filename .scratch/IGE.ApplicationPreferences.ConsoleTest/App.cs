@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 using Spectre.Console;
 
@@ -9,9 +10,9 @@ namespace IGE.WritableOptions.ConsoleTest
 {
     public class App : IHostedService
     {
-        readonly IWritableOptions<MyConfig> options;
+        readonly IOptions<MyConfig> options;
 
-        public App(IWritableOptions<MyConfig> options)
+        public App(IOptions<MyConfig> options)
         {
             this.options = options;
         }
@@ -20,14 +21,14 @@ namespace IGE.WritableOptions.ConsoleTest
         {
             var config = this.options.Value;
 
-            AnsiConsole.WriteLine($"Name: {this.options.Value.Name}");
-            AnsiConsole.WriteLine($"Score: {this.options.Value.Score}");
+            AnsiConsole.WriteLine($"Name: {config.Name}");
+            AnsiConsole.WriteLine($"Score: {config.Score}");
 
-            options.Update(config =>
-            {
-                config.Name = AnsiConsole.Ask<string>("Enter Your Name:");
-                config.Score = AnsiConsole.Ask<int>("Enter Score:");
-            });
+            //options.Update(config =>
+            //{
+            //    config.Name = AnsiConsole.Ask<string>("Enter Your Name:");
+            //    config.Score = AnsiConsole.Ask<int>("Enter Score:");
+            //});
 
             return Task.CompletedTask;
         }

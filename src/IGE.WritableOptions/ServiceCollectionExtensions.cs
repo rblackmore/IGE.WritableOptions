@@ -36,6 +36,8 @@ namespace IGE.WritableOptions
 
             services.AddTransient<IWritableOptions<T>>(WritableOptionsFactory<T>);
 
+            services.Configure<T>(nameof(T), section);
+
             return services;
         }
 

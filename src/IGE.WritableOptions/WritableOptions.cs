@@ -92,22 +92,22 @@ namespace IGE.WritableOptions
         {
             var physicalPath = this.PhysicalFilePath;
 
+            if (File.Exists(physicalPath))
+                return;
+
             // Create new file, and initilize with empty root object.
-            if (!File.Exists(physicalPath))
+            using var fileStream = File.OpenWrite(physicalPath);
+
+            using var writer = new Utf8JsonWriter(fileStream, new()
             {
-                using var fileStream = File.OpenWrite(physicalPath);
+                Indented = true,
+            });
 
-                using var writer = new Utf8JsonWriter(fileStream, new()
-                {
-                    Indented = true,
-                });
+            writer.WriteStartObject();
 
-                writer.WriteStartObject();
+            writer.WriteEndObject();
 
-                writer.WriteEndObject();
-
-                writer.Flush();
-            }
+            writer.Flush();
         }
     }
 }
