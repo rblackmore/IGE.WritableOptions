@@ -2,51 +2,57 @@
 // Copyright © 2021 Ryan Blackmore. All rights Reserved.
 // </copyright>
 
-namespace IGE.WritableOptions
+namespace IGE.WritableOptions;
+
+using System;
+using System.IO;
+using System.Text.Json;
+
+using Ardalis.GuardClauses;
+
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+
+public static class ServiceCollectionExtensions
 {
-    using System;
-    using System.Text.Json;
+  public static IServiceCollection ConfigureWritableOptions<T>(
+      this IServiceCollection services,
+      IConfigurationSection   configSection,
+      string sectionName,
+      string filePath = "appsettings.json",
+      Func<JsonSerializerOptions> defaultSerializerOptions = null)
+      where T : class, new()
+  {
+    Guard.Against.Null(services, nameof(services));
+    Guard.Against.NullOrWhiteSpace(filePath, nameof(filePath));
+    Guard.Against.NullOrWhiteSpace(sectionName, nameof(sectionName));
 
-    using Ardalis.GuardClauses;
+    services.Configure<T>(configSection);
 
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Hosting;
-    using Microsoft.Extensions.Options;
-
-    public static class ServiceCollectionExtensions
+    services.AddTransient<IWritableOptions<T>>(provider =>
     {
-        private static string FileName { get; set; }
+      string jsonFilePath;
 
-        private static IConfigurationSection Section { get; set; }
+      var environment = provider.GetService<IHostEnvironment>();
 
-        private static JsonSerializerOptions JsonSerializerOptions { get; set; }
+      if (environment != null)
+      {
+        var fileProvider = environment.ContentRootFileProvider;
+        var fileInfo = fileProvider.GetFileInfo(filePath);
+        jsonFilePath = fileInfo.PhysicalPath;
+      }
+      else
+      {
+        jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filePath);
+      }
 
-        public static IServiceCollection ConfigureWritableOptions<T>(
-            this IServiceCollection services,
-            IConfigurationSection section,
-            string file = "appsettings.json",
-            JsonSerializerOptions jsonSerializerOptions = null)
-            where T : class, new()
-        {
-            Guard.Against.Null(services, nameof(services));
-            FileName = Guard.Against.NullOrWhiteSpace(file, nameof(file));
-            Section = Guard.Against.Null(section, nameof(section));
-            JsonSerializerOptions = jsonSerializerOptions;
+      var options = provider.GetService<IOptionsMonitor<T>>();
 
-            services.AddTransient<IWritableOptions<T>>(WritableOptionsFactory<T>);
+      return new WritableOptions<T>(jsonFilePath, sectionName, options, defaultSerializerOptions);
+    });
 
-            services.Configure<T>(nameof(T), section);
-
-            return services;
-        }
-
-        private static WritableOptions<T> WritableOptionsFactory<T>(IServiceProvider provider)
-            where T : class, new()
-        {
-            var environment = provider.GetService<IHostEnvironment>();
-            var options = provider.GetService<IOptionsMonitor<T>>();
-            return new WritableOptions<T>(environment, options, Section.Key, FileName, JsonSerializerOptions);
-        }
-    }
+    return services;
+  }
 }

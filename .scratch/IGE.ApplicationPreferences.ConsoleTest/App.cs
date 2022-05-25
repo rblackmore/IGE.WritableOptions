@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿namespace IGE.WritableOptions.ConsoleTest;
+
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 
 using Spectre.Console;
@@ -6,37 +8,36 @@ using Spectre.Console;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace IGE.WritableOptions.ConsoleTest
+public class App : IHostedService
 {
-    public class App : IHostedService
-    {
-        readonly IOptions<MyConfig> options;
+  readonly IWritableOptions<MyConfig> options;
 
-        public App(IOptions<MyConfig> options)
-        {
-            this.options = options;
-        }
+  public App(IWritableOptions<MyConfig> options)
+  {
+    this.options = options;
+  }
 
-        public Task StartAsync(CancellationToken cancellationToken)
-        {
-            var config = this.options.Value;
+  public Task StartAsync(CancellationToken cancellationToken)
+  {
+    var config = this.options.Value;
 
-            AnsiConsole.WriteLine($"Name: {config.Name}");
-            AnsiConsole.WriteLine($"Score: {config.Score}");
+    var printData = string.Format("Name: {0}\nScore: {1}", config.Name, config.Score.ToString());
 
-            //options.Update(config =>
-            //{
-            //    config.Name = AnsiConsole.Ask<string>("Enter Your Name:");
-            //    config.Score = AnsiConsole.Ask<int>("Enter Score:");
-            //});
+    AnsiConsole.WriteLine(printData);
 
-            return Task.CompletedTask;
-        }
 
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            AnsiConsole.WriteLine("Goodbye, Now");
-            return Task.CompletedTask;
-        }
-    }
+    //options.Update(config =>
+    //{
+    //  config.Name = AnsiConsole.Ask<string>("Enter Your Name:");
+    //  config.Score = AnsiConsole.Ask<int>("Enter Score:");
+    //});
+
+    return Task.CompletedTask;
+  }
+
+  public Task StopAsync(CancellationToken cancellationToken)
+  {
+    AnsiConsole.WriteLine("Goodbye, Now");
+    return Task.CompletedTask;
+  }
 }

@@ -1,28 +1,24 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿namespace IGE.WritableOptions.ConsoleTest;
+
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace IGE.WritableOptions.ConsoleTest
+public static class Program
 {
-    public static class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
+  public static void Main(string[] args)
+  {
+    CreateHostBuilder(args).Build().Run();
+  }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureServices((context, services) =>
-                {
-                    services.AddHostedService<App>();
+  public static IHostBuilder CreateHostBuilder(string[] args) =>
+      Host.CreateDefaultBuilder(args)
+          .ConfigureServices((context, services) =>
+          {
+            services.AddHostedService<App>();
 
-                    var configurationSection =
-                        context.Configuration.GetSection(nameof(MyConfig));
+            var sectionName = nameof(MyConfig);
+            var configSection = context.Configuration.GetSection(sectionName);
 
-                    services
-                    .ConfigureWritableOptions<MyConfig>(
-                        configurationSection,
-                        "appsettings.json");
-                });
-    }
+            services.ConfigureWritableOptions<MyConfig>(configSection, sectionName, "resources/myconfig.json");
+          });
 }
