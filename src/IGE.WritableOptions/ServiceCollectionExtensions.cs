@@ -19,7 +19,7 @@ public static class ServiceCollectionExtensions
 {
   public static IServiceCollection ConfigureWritableOptions<T>(
       this IServiceCollection services,
-      IConfigurationSection   configSection,
+      IConfigurationSection configSection,
       string sectionName,
       string filePath = "appsettings.json",
       Func<JsonSerializerOptions> defaultSerializerOptions = null)

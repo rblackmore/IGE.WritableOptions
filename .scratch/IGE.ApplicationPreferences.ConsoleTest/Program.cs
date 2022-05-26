@@ -16,9 +16,9 @@ public static class Program
           {
             services.AddHostedService<App>();
 
-            var sectionName = nameof(MyConfig);
+            var sectionName = nameof(Settings);
             var configSection = context.Configuration.GetSection(sectionName);
 
-            services.ConfigureWritableOptions<MyConfig>(configSection, sectionName, "resources/myconfig.json");
+            services.ConfigureWritableOptions<Settings>(configSection, sectionName, "resources/settings.json");
           });
 }

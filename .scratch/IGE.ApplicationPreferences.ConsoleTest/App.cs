@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 public class App : IHostedService
 {
-  readonly IWritableOptions<MyConfig> options;
+  readonly IWritableOptions<Settings> options;
 
-  public App(IWritableOptions<MyConfig> options)
+  public App(IWritableOptions<Settings> options)
   {
     this.options = options;
   }
@@ -21,10 +21,16 @@ public class App : IHostedService
   {
     var config = this.options.Value;
 
-    var printData = string.Format("Name: {0}\nScore: {1}", config.Name, config.Score.ToString());
+    //var printData = string.Format("Name: {0}\nScore: {1}", config.Name, config.Score.ToString());
 
-    AnsiConsole.WriteLine(printData);
+    //AnsiConsole.WriteLine(printData);
 
+    options.Update(settings =>
+    {
+      settings.Text = AnsiConsole.Ask<string>("Some Text: ");
+      settings.Name = AnsiConsole.Ask<string>("Name: ");
+      settings.Score = AnsiConsole.Ask<int>("Score: ");
+    });
 
     //options.Update(config =>
     //{

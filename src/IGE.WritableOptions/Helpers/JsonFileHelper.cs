@@ -2,6 +2,7 @@
 
 using System;
 using System.IO;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -34,12 +35,14 @@ public static class JsonFileHelper
     var rootNode = JsonNode.Parse(jsonContent);
 
     var updatedObject =
-      rootNode[sectionName]?.Deserialize<T>(serializerOptions) ?? new();
+      rootNode?[sectionName]?.Deserialize<T>(serializerOptions) ?? new();
 
     applyChanges(updatedObject);
 
-    rootNode[sectionName] =
+    rootNode![sectionName] =
       JsonSerializer.SerializeToNode(updatedObject, serializerOptions);
+
+    File.WriteAllText(fullPath, string.Empty, Encoding.UTF8);
 
     var fileStream = File.OpenWrite(fullPath);
 
@@ -51,6 +54,8 @@ public static class JsonFileHelper
     rootNode.WriteTo(writer, serializerOptions);
 
     writer.Flush();
+
+    fileStream.Close();
   }
 
   private static byte[] ReadOrCreateJsonFile(string fullPath)
@@ -62,7 +67,7 @@ public static class JsonFileHelper
       if (!string.IsNullOrEmpty(fileDirectory))
         Directory.CreateDirectory(fileDirectory);
 
-      File.WriteAllText(fullPath, "{}");
+      File.WriteAllText(fullPath, string.Empty, Encoding.UTF8);
     }
 
     return File.ReadAllBytes(fullPath);
