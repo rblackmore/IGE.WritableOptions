@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <VersionPrefix>2.0.1</VersionPrefix>
+    <VersionPrefix>2.0.2</VersionPrefix>
     <VersionSuffix Condition="'$(Configuration)' == 'DEBUG'">-$([System.DateTime]::UtcNow.ToString(yyyyMMddhhmm))</VersionSuffix>
     <VersionSuffix Condition="'$(Configuration)'=='alpha'">-$(Configuration)-$([System.DateTime]::UtcNow.ToString(yyyyMMddhhmm))</VersionSuffix>
     <VersionSuffix Condition="'$(Configuration)' == 'RELEASE'"></VersionSuffix>
