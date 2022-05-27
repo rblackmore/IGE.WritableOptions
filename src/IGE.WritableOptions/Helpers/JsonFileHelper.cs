@@ -8,6 +8,8 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 
+using Spectre.Console;
+
 public static class JsonFileHelper
 {
   public static Func<JsonSerializerOptions> DefaultSerializerOptions => new(() =>
@@ -27,8 +29,11 @@ public static class JsonFileHelper
     JsonSerializerOptions serializerOptions = null)
     where T : class, new()
   {
+
     if (serializerOptions is null)
       serializerOptions = DefaultSerializerOptions.Invoke();
+
+    AnsiConsole.MarkupLine($"[yellow]FullPath: [/][green]{fullPath}[/]");
 
     var jsonContent = ReadOrCreateJsonFile(fullPath);
 
@@ -67,7 +72,7 @@ public static class JsonFileHelper
       if (!string.IsNullOrEmpty(fileDirectory))
         Directory.CreateDirectory(fileDirectory);
 
-      File.WriteAllText(fullPath, string.Empty, Encoding.UTF8);
+      File.WriteAllText(fullPath, "{}", Encoding.ASCII);
     }
 
     return File.ReadAllBytes(fullPath);

@@ -17,8 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".scratch", ".scratch", "{1D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IGE.WritableOptions.ConsoleTest", ".scratch\IGE.ApplicationPreferences.ConsoleTest\IGE.WritableOptions.ConsoleTest.csproj", "{90E543F5-477B-49E6-A35E-0B0B145DC146}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleScratch", ".scratch\ConsoleScratch\ConsoleScratch.csproj", "{EA5A0022-5BC2-40A9-AD02-4BA80FE71795}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		alpha|Any CPU = alpha|Any CPU
@@ -38,12 +36,6 @@ Global
 		{90E543F5-477B-49E6-A35E-0B0B145DC146}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90E543F5-477B-49E6-A35E-0B0B145DC146}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90E543F5-477B-49E6-A35E-0B0B145DC146}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EA5A0022-5BC2-40A9-AD02-4BA80FE71795}.alpha|Any CPU.ActiveCfg = alpha|Any CPU
-		{EA5A0022-5BC2-40A9-AD02-4BA80FE71795}.alpha|Any CPU.Build.0 = alpha|Any CPU
-		{EA5A0022-5BC2-40A9-AD02-4BA80FE71795}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EA5A0022-5BC2-40A9-AD02-4BA80FE71795}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EA5A0022-5BC2-40A9-AD02-4BA80FE71795}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EA5A0022-5BC2-40A9-AD02-4BA80FE71795}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -51,7 +43,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{88455B85-4CA4-44BD-8398-C80FC5A9BCCD} = {AC974B0C-9554-4696-898B-E20B4CA28E12}
 		{90E543F5-477B-49E6-A35E-0B0B145DC146} = {1D9EBFC2-487F-43E3-B5C2-870F5AA7AE78}
-		{EA5A0022-5BC2-40A9-AD02-4BA80FE71795} = {1D9EBFC2-487F-43E3-B5C2-870F5AA7AE78}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1F92C21A-0658-48C5-8A86-116C3036A356}

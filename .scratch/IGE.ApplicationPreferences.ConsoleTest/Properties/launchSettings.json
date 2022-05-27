@@ -1,7 +1,10 @@
 {
   "profiles": {
     "IGE.WritableOptions.ConsoleTest": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
     }
   }
 }

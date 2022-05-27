@@ -21,9 +21,9 @@ public class App : IHostedService
   {
     var config = this.options.Value;
 
-    //var printData = string.Format("Name: {0}\nScore: {1}", config.Name, config.Score.ToString());
+    var printData = string.Format("Text: {0}\nName: {1}\nScore: {2}",config.Text, config.Name, config.Score.ToString());
 
-    //AnsiConsole.WriteLine(printData);
+    AnsiConsole.WriteLine(printData);
 
     options.Update(settings =>
     {
