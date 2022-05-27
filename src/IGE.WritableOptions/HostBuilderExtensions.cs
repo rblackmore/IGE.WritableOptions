@@ -1,4 +1,4 @@
-﻿namespace IGE.WritableOptions.Extensions;
+﻿namespace IGE.WritableOptions;
 
 using System.Text.Json;
 
@@ -13,7 +13,7 @@ public static class HostBuilderExtensions
     this IHostBuilder hostBuilder,
     string sectionName,
     string fileName = "appsettings.json",
-    Func<JsonSerializerOptions>? jsonSerializerOptionsDelegate = null)
+    Func<JsonSerializerOptions>? jsonSerializerOptionsFactory = null)
     where T : class, new()
   {
     Guard.Against.Null(hostBuilder, nameof(hostBuilder));
@@ -30,7 +30,7 @@ public static class HostBuilderExtensions
           options.FileName = fileName;
           options.SectionName = sectionName;
           options.ConfigurationRoot = (IConfigurationRoot)context.Configuration;
-          options.JsonSerializerOptionsDelegate = jsonSerializerOptionsDelegate;
+          options.JsonSerializerOptionsFactory = jsonSerializerOptionsFactory;
         });
       });
 

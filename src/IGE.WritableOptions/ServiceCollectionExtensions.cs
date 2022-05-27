@@ -2,7 +2,7 @@
 // Copyright © 2021 Ryan Blackmore. All rights Reserved.
 // </copyright>
 
-namespace IGE.WritableOptions.Extensions;
+namespace IGE.WritableOptions;
 
 using System;
 using System.IO;
@@ -15,8 +15,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 
-using Spectre.Console;
-
 public static class ServiceCollectionExtensions
 {
   public class WritableOptionsSettings
@@ -25,9 +23,9 @@ public static class ServiceCollectionExtensions
 
     public string? SectionName { get; set; }
 
-    public Func<JsonSerializerOptions>? JsonSerializerOptionsDelegate { get; set; }
+    public Func<JsonSerializerOptions>? JsonSerializerOptionsFactory { get; set; }
 
-    public IConfigurationRoot ConfigurationRoot { get; set; }
+    public IConfigurationRoot? ConfigurationRoot { get; set; }
 
   }
 
@@ -43,9 +41,10 @@ public static class ServiceCollectionExtensions
     var configRoot = settings.ConfigurationRoot;
     var sectionName = settings.SectionName;
     var configSection = configRoot.GetSection(sectionName);
-    var jsonSerializerOptionsDelegate = settings.JsonSerializerOptionsDelegate;
+    var jsonSerializerOptionsFactory = settings.JsonSerializerOptionsFactory;
 
     services.Configure<T>(configSection);
+
     services.AddTransient<IWritableOptions<T>>(provider =>
     {
       string jsonFilePath;
@@ -72,8 +71,7 @@ public static class ServiceCollectionExtensions
         sectionName,
         options,
         configRoot,
-        jsonSerializerOptionsDelegate);
-
+        jsonSerializerOptionsFactory);
     });
 
     return services;
@@ -84,23 +82,19 @@ public static class ServiceCollectionExtensions
       IConfigurationRoot configRoot,
       string sectionName,
       string fileName = "appsettings.json",
-      Func<JsonSerializerOptions>? defaultJsonSerializerOptionsDelegate = null)
+      Func<JsonSerializerOptions>? jsonSerializerOptionsFactory = null)
       where T : class, new()
   {
     Guard.Against.Null(services, nameof(services));
     Guard.Against.NullOrWhiteSpace(fileName, nameof(fileName));
     Guard.Against.NullOrWhiteSpace(sectionName, nameof(sectionName));
 
-    var settings = new WritableOptionsSettings
-    {
-    };
-
     return services.AddWritableOptions<T>(options =>
     {
       options.FileName = fileName;
       options.ConfigurationRoot = configRoot;
       options.SectionName = sectionName;
-      options.JsonSerializerOptionsDelegate = defaultJsonSerializerOptionsDelegate;
+      options.JsonSerializerOptionsFactory = jsonSerializerOptionsFactory;
     });
   }
 }

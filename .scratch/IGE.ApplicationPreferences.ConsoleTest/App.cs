@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 public class App : IHostedService
 {
-  readonly IWritableOptions<Settings> options;
+  readonly IOptions<Settings> options;
 
-  public App(IWritableOptions<Settings> options)
+  public App(IOptions<Settings> options)
   {
     this.options = options;
   }
@@ -25,12 +25,12 @@ public class App : IHostedService
 
     AnsiConsole.WriteLine(printData);
 
-    options.Update(settings =>
-    {
-      settings.Text = AnsiConsole.Ask<string>("Some Text: ");
-      settings.Name = AnsiConsole.Ask<string>("Name: ");
-      settings.Score = AnsiConsole.Ask<int>("Score: ");
-    });
+    //options.Update(settings =>
+    //{
+    //  settings.Text = AnsiConsole.Ask<string>("Some Text: ");
+    //  settings.Name = AnsiConsole.Ask<string>("Name: ");
+    //  settings.Score = AnsiConsole.Ask<int>("Score: ");
+    //});
 
     //options.Update(config =>
     //{

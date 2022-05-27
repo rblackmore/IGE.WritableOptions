@@ -23,27 +23,11 @@ public class WritableOptions<TOptions> : IWritableOptions<TOptions>
   private readonly JsonSerializerOptions jsonSerializerOptions;
 
   public WritableOptions(
-      string filePath,
-      string section,
-      IOptionsMonitor<TOptions> options,
-      Func<JsonSerializerOptions> defaultSerializerOptions = null)
-  {
-    this.jsonFilePath = filePath;
-    this.sectionName = section;
-    this.options = options;
-
-    this.jsonSerializerOptions =
-      (defaultSerializerOptions is null)
-      ? JsonFileHelper.DefaultSerializerOptions()
-      : defaultSerializerOptions();
-  }
-
-  public WritableOptions(
     string jsonFilePath,
     string sectionName,
     IOptionsMonitor<TOptions> optionsMonitor,
     IConfigurationRoot configRoot,
-    Func<JsonSerializerOptions> defaultSerializerOptionsDelegate = null)
+    Func<JsonSerializerOptions>? defaultSerializerOptionsDelegate = null)
   {
     this.jsonFilePath = jsonFilePath;
     this.sectionName = sectionName;
@@ -63,7 +47,7 @@ public class WritableOptions<TOptions> : IWritableOptions<TOptions>
   public TOptions Get(string name) => this.options.Get(name);
 
   /// <inheritdoc/>
-  public void Update(Action<TOptions> applyChanges, bool reload = true, JsonSerializerOptions serializerOptions = null)
+  public void Update(Action<TOptions> applyChanges, bool reload = true, JsonSerializerOptions? serializerOptions = null)
   {
     JsonFileHelper.AddOrUpdateSection(this.jsonFilePath, this.sectionName, applyChanges, serializerOptions ?? this.jsonSerializerOptions);
 
